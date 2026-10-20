@@ -3,7 +3,7 @@ from typing import Optional
 from backend.app.core.config import settings
 from backend.app.schemas.hygiene import KitchenHygieneResponse
 from backend.app.services.hygiene_inspector import hygiene_inspector
-from backend.app.database.connection import get_db
+from backend.app.database.connection import get_db, is_mongo_active
 
 router = APIRouter(prefix="/hygiene", tags=["Kitchen & Restaurant Hygiene"])
 
@@ -41,7 +41,7 @@ async def analyze_hygiene_image(
     try:
         db = get_db()
         doc = result.model_dump()
-        if hasattr(db, "insert_one"):
+        if not is_mongo_active():
             db.insert_one("hygiene_audits", doc)
         else:
             db["hygiene_audits"].insert_one(doc)
@@ -81,7 +81,7 @@ async def analyze_hygiene_video(
     try:
         db = get_db()
         doc = result.model_dump()
-        if hasattr(db, "insert_one"):
+        if not is_mongo_active():
             db.insert_one("hygiene_audits", doc)
         else:
             db["hygiene_audits"].insert_one(doc)

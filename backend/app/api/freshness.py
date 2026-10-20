@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, status
 from backend.app.core.config import settings
 from backend.app.schemas.freshness import FreshnessAnalysisResponse
 from backend.app.services.freshness_analyzer import freshness_analyzer
-from backend.app.database.connection import get_db
+from backend.app.database.connection import get_db, is_mongo_active
 
 router = APIRouter(prefix="/freshness", tags=["Food Freshness & Spoilage"])
 
@@ -33,7 +33,7 @@ async def analyze_freshness(file: UploadFile = File(...)):
     try:
         db = get_db()
         doc = result.model_dump()
-        if hasattr(db, "insert_one"):
+        if not is_mongo_active():
             db.insert_one("freshness_analyses", doc)
         else:
             db["freshness_analyses"].insert_one(doc)

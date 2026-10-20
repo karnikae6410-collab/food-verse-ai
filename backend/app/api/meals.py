@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from typing import List, Dict, Any
 from backend.app.schemas.meal_planner import MealPlanRequest, MealPlanResponse
 from backend.app.services.meal_planner_service import meal_planner_service
-from backend.app.database.connection import get_db
+from backend.app.database.connection import get_db, is_mongo_active
 
 router = APIRouter(prefix="/meals", tags=["Personalized Meal Planner"])
 
@@ -20,7 +20,7 @@ def generate_meal_plan(req: MealPlanRequest):
 @router.get("", response_model=List[Dict[str, Any]])
 def get_saved_meal_plans(limit: int = 20):
     db = get_db()
-    if hasattr(db, "find"):
+    if not is_mongo_active():
         plans = db.find("meal_plans", limit=limit)
     else:
         cursor = db["meal_plans"].find({}, {"_id": 0}).sort("timestamp", -1).limit(limit)
@@ -30,7 +30,7 @@ def get_saved_meal_plans(limit: int = 20):
 @router.post("", status_code=status.HTTP_201_CREATED)
 def save_meal_plan(plan: Dict[str, Any]):
     db = get_db()
-    if hasattr(db, "insert_one"):
+    if not is_mongo_active():
         new_id = db.insert_one("meal_plans", plan)
     else:
         res = db["meal_plans"].insert_one(plan)

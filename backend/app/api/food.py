@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, status
 from backend.app.core.config import settings
 from backend.app.schemas.food import FoodAnalysisResponse
 from backend.app.services.food_recognizer import food_recognizer
-from backend.app.database.connection import get_db
+from backend.app.database.connection import get_db, is_mongo_active
 
 router = APIRouter(prefix="/food", tags=["Food Recognition & Nutrition"])
 
@@ -35,12 +35,11 @@ async def analyze_food(file: UploadFile = File(...)):
     try:
         db = get_db()
         doc = result.model_dump()
-        if hasattr(db, "insert_one"):
+        if not is_mongo_active():
             db.insert_one("food_analyses", doc)
         else:
             db["food_analyses"].insert_one(doc)
     except Exception as err:
-        # Don't fail the user response if database logging experiences a hiccup
         pass
 
     return result

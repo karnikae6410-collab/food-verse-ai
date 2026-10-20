@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from typing import Dict, Any, List, Optional
-from backend.app.database.connection import get_db
+from backend.app.database.connection import get_db, is_mongo_active
 
 router = APIRouter(prefix="/history", tags=["Unified Analysis History & Analytics"])
 
@@ -8,7 +8,7 @@ router = APIRouter(prefix="/history", tags=["Unified Analysis History & Analytic
 def get_unified_history(category: Optional[str] = None, limit: int = 50) -> Dict[str, Any]:
     db = get_db()
     
-    if hasattr(db, "find"):
+    if not is_mongo_active():
         food_scans = db.find("food_analyses", limit=limit)
         freshness_scans = db.find("freshness_analyses", limit=limit)
         hygiene_scans = db.find("hygiene_audits", limit=limit)
@@ -46,7 +46,7 @@ def get_unified_history(category: Optional[str] = None, limit: int = 50) -> Dict
 @router.get("/stats")
 def get_dashboard_stats() -> Dict[str, Any]:
     db = get_db()
-    if hasattr(db, "find"):
+    if not is_mongo_active():
         food_scans = db.find("food_analyses", limit=100)
         freshness_scans = db.find("freshness_analyses", limit=100)
         hygiene_scans = db.find("hygiene_audits", limit=100)

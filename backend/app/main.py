@@ -62,9 +62,20 @@ def root():
         "tagline": "Smarter Food Choices. Safer Meals. Healthier Living.",
         "version": "1.0.0",
         "docs_url": "/docs",
+        "demo_video": "/demo-video",
         "health_check": "/api/health",
         "status": "operational"
     })
+
+@app.get("/demo-video")
+@app.get("/food_verse_demo.mp4")
+def get_demo_video():
+    import os
+    from fastapi.responses import FileResponse
+    video_path = r"d:\food-verse-ai\frontend\public\food_verse_demo.mp4"
+    if os.path.exists(video_path):
+        return FileResponse(video_path, media_type="video/mp4", filename="food_verse_demo.mp4")
+    return JSONResponse(status_code=404, content={"detail": "Demo video not found"})
 
 if __name__ == "__main__":
     import uvicorn
