@@ -2,7 +2,20 @@
 
 > **"Smarter Food Choices. Safer Meals. Healthier Living."**
 
-Food Verse AI is a production-grade multimodal AI food intelligence platform combining computer vision food recognition, macro/micronutrient estimation, optical food freshness & spoilage detection, commercial kitchen hygiene monitoring, smart conversational cooking assistance, and strict allergy-safe meal planning.
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=karnikae6410-collab/food-verse-ai)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/karnikae6410-collab/food-verse-ai)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/karnikae6410-collab/food-verse-ai)
+
+---
+
+## ⚡ Instant 1-Click Runnable & Executable Links
+
+| Environment | 1-Click Runnable Link | Description |
+|---|---|---|
+| **Cloud Web Browser** | [🚀 Run in GitHub Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=karnikae6410-collab/food-verse-ai) | Launches and executes the entire full-stack app directly in your browser with zero installation. |
+| **Gitpod Cloud** | [☁️ Run on Gitpod](https://gitpod.io/#https://github.com/karnikae6410-collab/food-verse-ai) | Automated cloud sandbox executing FastAPI & Next.js. |
+| **Local Windows** | Run [`run.bat`](./run.bat) | Double-click to launch backend, frontend, and open `http://localhost:3000` automatically. |
+| **Demo Video Stream** | [🎬 Watch Demo Video](http://localhost:8000/demo-video) | Browser playable MP4 walkthrough of all modules. |
 
 ---
 

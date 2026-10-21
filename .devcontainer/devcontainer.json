@@ -1,0 +1,17 @@
+{
+  "name": "Food Verse AI Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "forwardPorts": [3000, 8000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Food Verse AI Frontend",
+      "onAutoForward": "openBrowser"
+    },
+    "8000": {
+      "label": "FastAPI Backend API",
+      "onAutoForward": "silent"
+    }
+  },
+  "postCreateCommand": "python3 -m pip install -r backend/requirements.txt && cd frontend && npm install",
+  "postStartCommand": "nohup python3 -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 > /tmp/backend.log 2>&1 & cd frontend && npm run dev"
+}
